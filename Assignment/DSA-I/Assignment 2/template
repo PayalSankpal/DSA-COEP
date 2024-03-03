@@ -1,0 +1,8 @@
+#include<stdio.h>
+
+int main(){
+    int row;
+    printf("Enter number of rows:\n");
+    scanf("%d", &row); 
+    return 0;
+}
