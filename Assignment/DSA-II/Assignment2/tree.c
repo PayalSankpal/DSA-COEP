@@ -213,54 +213,15 @@ void levelwise(bst* t){
 
 int isComplete(bst* t){
     int *p= t->tree;
-    int pos = 0;
-    while(pos<t->size){
-        if(p[pos]!=INT_MAX){
-            if((2*pos)+1 < t->size){
-                if (p[(2*pos)+1]==INT_MAX){
-                    if((2*pos)+2 < t->size){
-                        if (p[(2*pos)+2]==INT_MAX){
-                            break;
-                        }
-                    }
-                    else{
-                        break;
-                    }
-                }
-            }
-            else{
-                break;
-            }
+    int pos = 0, flag=0;
+    while(pos< t->size){
+        if(p[pos]==INT_MAX && flag==0){
+            flag=0
         }
-        pos++;
-    }
-    int n=0, power=2;
-    if(pos<t->length){
-        while(n<pos){
-            n += power;
-            power*=2;
+        else if(p[pos]!=INT_MAX && flag==1){
+            return 0
         }
+        pos+=1
     }
-    pos=n+1;
-    while(pos<t->size){
-        if(p[pos]!=INT_MAX){
-            if((2*pos)+1 < t->size){
-                if (p[(2*pos)+1]==INT_MAX){
-                    if((2*pos)+2 < t->size){
-                        if (p[(2*pos)+2]==INT_MAX){
-                            return 0;
-                        }
-                    }
-                    else{
-                        return 0;
-                    }
-                }
-            }
-            else{
-                return 0;
-            }
-        }
-        pos++;
-    }
-    return 1;
+    return 1
 }
