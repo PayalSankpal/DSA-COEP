@@ -3,6 +3,8 @@
 #include <string.h>
 #include "avl.h"
 
+#define max( a, b)( a > b ? a : b)
+
 void initAVL(avl* t){
     *t=NULL;
     return;
@@ -25,14 +27,7 @@ int height(avl t){
     if(t==NULL){
         return 0;
     }
-    int lh = height(t->left);
-    int rh = height(t->right);
-    if(lh>rh){
-        return lh+1;
-    }
-    else{
-        return rh+1;
-    }
+    return 1+ max(height(t->left), height(t->right));
 }
 
 void calculateBF(avl* t){
@@ -107,7 +102,7 @@ void LR(avl* t, avl* m){
 }
 
 
-void adjustBF(avl* t, avl* m){
+void adjustBF(avl* t, avl* m){ // t=node , m=original tree
     node* p = *t;
     while(p){
         if(p->bf > 1){
