@@ -48,9 +48,9 @@ void max_insert_heap(heap* t, int n){
 } 
 
 void max_heapsort(heap* h){
-    int count = h->length;
+    int count = h->length+1;
     int ele;
-    for(int i=0; i<count+1; i+=1){
+    for(int i=0; i<count; i+=1){
         printf("%d ",removeRoot(h));
         max_heapify(h);
     }
@@ -63,24 +63,18 @@ void max_heapify(heap* h){
         return;
     }
     int *p = h->tree;
-    int pos_outer=go_back(h->length-1), pos=pos_outer;
-    int temp=0, lc=0, rc=0;
+    int pos_outer=go_back(h->length), pos=pos_outer;
+    int temp=0;
     while(pos_outer > -1){
         pos=pos_outer;
         while(pos<(h->length)){
             if(p[(2*pos)+1]>p[(2*pos)+2] || p[(2*pos)+2]==INT_MAX){
-                if(p[(2*pos)+1]>p[pos]){
+                if(p[(2*pos)+1]!=INT_MAX && p[(2*pos)+1]>p[pos]){
                     temp=p[pos];
                     p[pos]=p[(2*pos)+1];
                     p[(2*pos)+1]=temp;
                 }
-                lc=(2*pos)+1;
-                if((2*lc)+1 < h->length ){
-                    pos=lc;
-                }
-                else{
-                    break;
-                }
+                pos=(2*pos)+1;
             }
             else if(p[(2*pos)+1]< p[(2*pos)+2] && p[(2*pos)+2]!=INT_MAX){
                 if(p[(2*pos)+2]>p[pos]){
@@ -88,13 +82,7 @@ void max_heapify(heap* h){
                     p[pos]=p[(2*pos)+2];
                     p[(2*pos)+2]=temp;
                 }
-                rc=(2*pos)+2;
-                if((2*rc)+1 < h->length ){
-                    pos=rc;
-                }
-                else{
-                    break;
-                }
+                pos=(2*pos)+2;
             }
         }
         pos_outer-=1;
@@ -120,9 +108,9 @@ void min_insert_heap(heap* t, int n){
 
 
 void min_heapsort(heap* h){
-    int count = h->length;
+    int count = h->length+1;
     int ele;
-    for(int i=0; i<count+1; i+=1){
+    for(int i=0; i<count; i+=1){
         printf("%d ",removeRoot(h));
         min_heapify(h);
     }
@@ -134,8 +122,8 @@ void min_heapify(heap* h){
         return;
     }
     int *p = h->tree;
-    int pos_outer=go_back(h->length-1), pos=pos_outer;
-    int temp=0, lc=0, rc=0;
+    int pos_outer=go_back(h->length), pos=pos_outer;
+    int temp=0;
     while(pos_outer > -1){
         pos=pos_outer;
         while(pos<(h->length)){
@@ -144,10 +132,7 @@ void min_heapify(heap* h){
                     temp=p[pos];
                     p[pos]=p[(2*pos)+2];
                     p[(2*pos)+2]=temp;
-                }
-                rc=(2*pos)+2;
-                if((2*rc)+1 < h->length ){
-                    pos=rc;
+                    pos=(2*pos)+2;
                 }
                 else{
                     break;
@@ -158,10 +143,7 @@ void min_heapify(heap* h){
                     temp=p[pos];
                     p[pos]=p[(2*pos)+1];
                     p[(2*pos)+1]=temp;
-                }
-                lc=(2*pos)+1;
-                if((2*lc)+1 < h->length ){
-                    pos=lc;
+                    pos=(2*pos)+1;
                 }
                 else{
                     break;
@@ -182,10 +164,7 @@ void levelwise(heap* t){
 }
 
 int isEmpty(heap* h){
-    if(h->tree[0]==INT_MAX){
-        return 1;
-    }
-    return 0;
+    return (h->length==-1);
 }
 
 
